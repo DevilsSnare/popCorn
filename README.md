@@ -1,5 +1,5 @@
 # popcorn
-
+A movie recommendation website
 
 ![](/assets/1.png)
 
