@@ -9,20 +9,24 @@ import requests
 app = Flask(__name__)
 
 
+def recom(name):
+    inSeries = model.get_recommendations(name)
+    inList = inSeries.tolist()
+    inJSON = json.dumps(inList)
+    return inJSON
+
+
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
 
 
-@app.route('/recommend', methods=["GET", "POST"])
+@app.route('/recommend', methods=['POST'])
 def recommend():
-    if request.method == "POST":
-        m = request.json
-        recom = model.get_recommendations(m)
-        recom = recom.tolist()
-        return jsonify(recom)
-    return render_template('index.html')
+    mName = request.form['name']
+    mArr = recom(mName)
+    return mArr
 
 
 if __name__ == "__main__":
