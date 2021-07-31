@@ -1,4 +1,4 @@
-const api_key='b57794c5b4c0edf4144e3d126855037e';
+const api_key='';
 $(document).ready(function() {
     let title=document.getElementById('searchBar').placeholder;
     if(title.length>0) {

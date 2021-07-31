@@ -1,4 +1,4 @@
-const api_key='b57794c5b4c0edf4144e3d126855037e';
+const api_key='';
 window.onload=function() {
     set_carousel();
     set_topRated();
