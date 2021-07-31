@@ -1,26 +1,63 @@
 const api_key='b57794c5b4c0edf4144e3d126855037e';
-$(document).ready(function() {
+window.onload=function() {
+    set_carousel();
+    set_topRated();
+    
+};
+function set_carousel(){
     $.ajax({
         type:'GET',
         url:'https://api.themoviedb.org/3/movie/popular?api_key='+api_key+'&language=en-US&page=1',
 
         success: function(trending) {
-            let mov1=[trending.results[0].title, 'https://image.tmdb.org/t/p/original'+trending.results[0].backdrop_path, trending.results[0].overview, trending.results[0].id];
-            let mov2=[trending.results[1].title, 'https://image.tmdb.org/t/p/original'+trending.results[1].backdrop_path, trending.results[1].overview, trending.results[1].id];
-            let mov3=[trending.results[2].title, 'https://image.tmdb.org/t/p/original'+trending.results[2].backdrop_path, trending.results[2].overview, trending.results[2].id];
-            let mov4=[trending.results[3].title, 'https://image.tmdb.org/t/p/original'+trending.results[3].backdrop_path, trending.results[3].overview, trending.results[3].id];
-            let mov5=[trending.results[4].title, 'https://image.tmdb.org/t/p/original'+trending.results[4].backdrop_path, trending.results[4].overview, trending.results[4].id];
-            set_carousel(mov1, mov2, mov3, mov4, mov5);
+            let mov=[];
+            for(let i=1;i<6;i++) {
+                mov[i]=[trending.results[i-1].title, 'https://image.tmdb.org/t/p/original'+trending.results[i-1].backdrop_path, trending.results[i-1].vote_average, trending.results[i-1].id];
+            }
+            for(let i=1;i<6;i++) {
+                document.getElementById('movie'+i).innerHTML='<img class="bd-placeholder-img" width="100%" height="100%" src="'+mov[i][1]+'"><div class="container"><div class="carousel-caption" style="background-color: rgba(0,0,0,.5) !important;"><h1>'+mov[i][0]+'</h1><p>'+mov[i][2]+'</p><p><a class="btn btn-lg btn-danger" href="#target1" onclick="load_details('+mov[i][3]+')">Look up</a></p></div></div>';
+            }
         },
         error: function(err) {
             console.log(err);
         }
     });
-});
-function set_carousel(mov1, mov2, mov3, mov4, mov5){
-    document.getElementById('movie1').innerHTML='<img class="bd-placeholder-img" width="100%" height="100%" src="'+mov1[1]+'"><div class="container"><div class="carousel-caption" style="background-color: rgba(0,0,0,.5) !important;"><h1>'+mov1[0]+'</h1><p>'+mov1[2]+'</p><p><a class="btn btn-lg btn-danger" href="#target1" onclick="load_details('+mov1[3]+')">Look up</a></p></div></div>';
-    document.getElementById('movie2').innerHTML='<img class="bd-placeholder-img" width="100%" height="100%" src="'+mov2[1]+'"><div class="container"><div class="carousel-caption" style="background-color: rgba(0,0,0,.5) !important;"><h1>'+mov2[0]+'</h1><p>'+mov2[2]+'</p><p><a class="btn btn-lg btn-danger" href="#target1" onclick="load_details('+mov2[3]+')">Look up</a></p></div></div>';
-    document.getElementById('movie3').innerHTML='<img class="bd-placeholder-img" width="100%" height="100%" src="'+mov3[1]+'"><div class="container"><div class="carousel-caption" style="background-color: rgba(0,0,0,.5) !important;"><h1>'+mov3[0]+'</h1><p>'+mov3[2]+'</p><p><a class="btn btn-lg btn-danger" href="#target1" onclick="load_details('+mov3[3]+')">Look up</a></p></div></div>';
-    document.getElementById('movie4').innerHTML='<img class="bd-placeholder-img" width="100%" height="100%" src="'+mov4[1]+'"><div class="container"><div class="carousel-caption" style="background-color: rgba(0,0,0,.5) !important;"><h1>'+mov4[0]+'</h1><p>'+mov4[2]+'</p><p><a class="btn btn-lg btn-danger" href="#target1" onclick="load_details('+mov4[3]+')">Look up</a></p></div></div>';
-    document.getElementById('movie5').innerHTML='<img class="bd-placeholder-img" width="100%" height="100%" src="'+mov5[1]+'"><div class="container"><div class="carousel-caption" style="background-color: rgba(0,0,0,.5) !important;"><h1>'+mov5[0]+'</h1><p>'+mov5[2]+'</p><p><a class="btn btn-lg btn-danger" href="#target1" onclick="load_details('+mov5[3]+')">Look up</a></p></div></div>';
 }
+function set_topRated(){
+    $.ajax({
+        type:'GET',
+        url:'https://api.themoviedb.org/3/movie/top_rated?api_key='+api_key+'&language=en-US&page=1',
+
+        success: function(trending) {
+            let mov=[];
+            for(let i=0;i<10;i++) {
+                mov[i]=[trending.results[i].title, 'https://image.tmdb.org/t/p/original'+trending.results[i].poster_path, trending.results[i].vote_average, trending.results[i].id];
+            }
+            for(let i=0;i<9;i++){
+                document.getElementById('top'+i).innerHTML='<img src="'+mov[i][1]+'"><div class="content"><h1>'+mov[i][0]+'</h1><h3>'+mov[i][2]+'</h3></div>';
+            }
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+}
+// function set_genreComedy() {
+//     $.ajax({
+//         type:'GET',
+//         url:'https://api.themoviedb.org/3/discover/movie?api_key='+api_key+'&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1&with_genres=35&with_watch_monetization_types=flatrate',
+
+//         success: function(trending) {
+//             let mov=[];
+//             for(let i=0;i<10;i++) {
+//                 mov[i]=[trending.results[i].title, 'https://image.tmdb.org/t/p/original'+trending.results[i].poster_path, trending.results[i].vote_average, trending.results[i].id];
+//             }
+//             for(let i=0;i<9;i++){
+//                 document.getElementById('comedy'+i).innerHTML='<img src="'+mov[i][1]+'"><div class="content"><h1>'+mov[i][0]+'</h1><h3>'+mov[i][2]+'</h3></div>';
+//             }
+//         },
+//         error: function(err) {
+//             console.log(err);
+//         }
+//     });
+// }
