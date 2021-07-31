@@ -1,3 +1,6 @@
+import re
+
+from numpy.core.numeric import moveaxis
 import recoms.recom as model
 from flask import Flask, app, render_template, request, jsonify
 import json
@@ -20,6 +23,12 @@ def recom(name):
 @app.route('/index')
 def index():
     return render_template('index.html')
+
+
+@app.route('/s_result', methods=['POST'])
+def s_result():
+    movie = request.form['movie_name']
+    return render_template('s_result.html', movie_name=movie)
 
 
 @app.route('/recommend', methods=['POST'])
