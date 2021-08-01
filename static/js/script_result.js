@@ -1,4 +1,4 @@
-const api_key='';
+const api_key='b57794c5b4c0edf4144e3d126855037e';
 $(document).ready(function() {
     let title=document.getElementById('searchBar').placeholder;
     if(title.length>0) {
@@ -25,6 +25,8 @@ function get_mId(title) {
         }
     });
 }
+
+
 
 function load_details(mId) {
     $.ajax({
